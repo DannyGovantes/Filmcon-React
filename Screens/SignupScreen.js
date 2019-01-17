@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import { View, Button, Text } from 'react-native';
 import * as firebase from "firebase";
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { FormValidationMessage } from 'react-native-elements'
+import { Container,Content,Header,Form,Input,Item,Button,Label } from "native-base";
 
 
-
+//Constructor
 class SignupScreen extends Component {
     constructor(props) {
         super(props);
@@ -14,10 +15,9 @@ class SignupScreen extends Component {
             error: '',
             loading: false
         };
-
     }
 
-
+//Función de registro
     onLoginPress() {
         this.setState({ error: '', loading: 'true' });
         const { email, password } = this.state;
@@ -32,32 +32,45 @@ class SignupScreen extends Component {
         })
     }
 
-    renderButtonOrLoading() {
-        if (this.state.loading) {
-            return <Text>Loading</Text>
-        }
-        return <View>
-            <Button onPress={this.onLoginPress.bind(this)} title="Sign Up" />
-        </View>
-
-    }
     render() {
         return (
-
-            <View>
-                <FormLabel>Email</FormLabel>
-                <FormInput value={this.state.email}
-                    placeholder="Email"
-                    onChangeText={email => this.setState({ email })} />
-                <FormLabel>Password</FormLabel>
-                <FormInput value={this.state.password}
-                    secureTextEntry
-                    placeholder="Password"
-                    onChangeText={password => this.setState({ password })} />
-                {this.renderButtonOrLoading()}
-            </View>
-
+            <Container>
+                <Form>
+                    <Item>
+                        <Label>Email</Label>
+                        <Input
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        />
+                    </Item>
+                    <Item>
+                        <Label>Password</Label>
+                        <Input
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        secureTextEntry={true}
+                        />
+                    </Item>
+                    <Button
+                    full
+                    rounded
+                    dark
+                    />
+                </Form>
+            </Container>
         )
     }
 }
 export default SignupScreen;
+/*<FormLabel>Email</FormLabel>
+{ <FormInput value={this.state.email}
+    placeholder="Email"
+    onChangeText={email => this.setState({ email })} />
+    <FormLabel>Password</FormLabel>
+    <FormInput value={this.state.password}
+        secureTextEntry
+        placeholder="Password"
+        onChangeText={password => this.setState({ password })} />
+                    { this.renderButtonOrLoading() }
+<Button onPress={() => this.props.navigation.navigate('LoginScreen')}
+    title='¿Ya tienes cuenta? Inicia sesión' /> */

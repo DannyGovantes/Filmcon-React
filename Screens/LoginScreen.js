@@ -3,16 +3,6 @@ import { View, Button, Text } from 'react-native';
 import * as firebase from "firebase";
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 
-var config = {
-    apiKey: "AIzaSyAlSGvofVwY345VzVOhiPkqWicdAP3DLGg",
-    authDomain: "filmconpra.firebaseapp.com",
-    databaseURL: "https://filmconpra.firebaseio.com",
-    projectId: "filmconpra",
-    storageBucket: "filmconpra.appspot.com",
-    messagingSenderId: "11718023847"
-};
-firebase.initializeApp(config);
-
 class LoginScreen extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +14,6 @@ class LoginScreen extends Component {
         };
 
     }
-
 
     onLoginPress() {
         this.setState({ error: '', loading: 'true' });

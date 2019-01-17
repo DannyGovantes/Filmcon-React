@@ -13,6 +13,4 @@ class FeedScreen extends Component{
 
 }
 
-
-
 export default FeedScreen;
