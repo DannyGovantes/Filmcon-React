@@ -74,7 +74,7 @@ class Settings extends Component {
 
 //-------------------------------------------------------------------------------------
 const DashBoardTabNavigator=createBottomTabNavigator({
-  Feed,
+  FeedScreen :{screen: FeedScreen},
   Profile,
   Settings
 }, {

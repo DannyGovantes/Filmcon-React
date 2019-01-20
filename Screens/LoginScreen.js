@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
-import { View, Button, Text } from 'react-native';
+import { View, StyleSheet,Animated,Easing } from 'react-native';
 import * as firebase from "firebase";
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { Button, Icon, FormLabel, FormInput, FormValidationMessage,Text } from 'react-native-elements'
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -13,6 +13,17 @@ class LoginScreen extends Component {
             loading: false
         };
 
+    }
+
+    componentWillMount(){
+        this.animatedValue= new Animated.Value(0)
+    }
+    componentDidMount(){
+        Animated.timing(this.animatedValue,{
+            toValue:70,
+            duration:500,
+            easing:Easing.bounce
+        }).start()
     }
 
     onLoginPress() {
@@ -30,30 +41,65 @@ class LoginScreen extends Component {
     }
 
     renderButtonOrLoading() {
-        if (this.state.loading) {
-            return <Text>Loading</Text>
-        }
         return <View>
-            <Button onPress={this.onLoginPress.bind(this)} title="Login" />
+            <Button 
+                backgroundColor='#232323'
+                outline
+                rounded
+                style={{ marginTop: 10 }}
+                icon={{ name: 'envira', type: 'font-awesome' }}
+            onPress={this.onLoginPress.bind(this)} title="Login" />
         </View>
 
     }
     render() {
+
+        const animatedStyle = {height: this.animatedValue}
         return (
 
-            <View>
+            <View style={styles.container}>
+                <Animated.View style={[styles.filmcon, animatedStyle]}>
+                    <Text h1
+                    style={styles.filmcon}>
+                    FILMCON
+                    </Text>
+                 </Animated.View>
+
+                <Icon style={{margin:'auto'}}
+                    reverse
+                    name='sc-telegram'
+                    type='evilicon'
+                    color='#7E7F7E'
+                    size={30}
+                />
+                
                 <FormLabel>Email</FormLabel>
                 <FormInput value={this.state.email} 
-                placeholder="Email"
+                    placeholder="Email"
+                    placeholderTextColor="white"
+                    autoCapitalize={"none"}
+                    keyboardType={"email-address"}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                    blurOnSubmit={false}
                 onChangeText={email => this.setState({ email })} />
+                
+                
                 <FormLabel>Password</FormLabel>
+                
                 <FormInput value={this.state.password} 
-                secureTextEntry
-                placeholder="Password"
+                    secureTextEntry
+                     placeholder="Password"
+                    placeholderTextColor="white"
+                    ref={(input) => { this.secondTextInput = input; }}
                 onChangeText={password => this.setState({ password })} />
                 {this.renderButtonOrLoading()}
 
-                <Button onPress={()=> this.props.navigation.navigate('SignupScreen')}
+                <Button 
+                transparent
+                color='white'
+                onPress={()=> this.props.navigation.navigate('SignupScreen')}
+                activityIndicatorStyle
                 title='¿No tienes cuenta? Regístrate'/>
 
             </View>
@@ -61,4 +107,21 @@ class LoginScreen extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#232323',
+        justifyContent: 'center',
+        padding: 10,
+
+    },
+    filmcon: { 
+        textAlign: 'center',
+        color: 'white' 
+    }
+
+
+
+});
 export default LoginScreen;
