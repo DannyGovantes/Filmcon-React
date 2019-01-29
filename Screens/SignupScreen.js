@@ -5,6 +5,7 @@ import { Button, Icon, FormLabel, FormInput, FormValidationMessage,Text } from '
 
 
 var actionCodeSettings = {
+    //Página propia de la emprase
     url: 'https//www.google.com',
     handleCodeInApp: true,
     iOS:{
@@ -15,6 +16,7 @@ var actionCodeSettings = {
         installApp:true,
         minimumVersion:'12'
     },
+    //Dominio de nuestra página
     dynamicaDomain: 'example.page.link'
 };
 
@@ -54,6 +56,7 @@ class SignupScreen extends Component {
                 
             }).catch((err)=>{
                 //Display error
+                //err.message => string 
             });
 
             this.setState({ loading: false });

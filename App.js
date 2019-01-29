@@ -8,6 +8,7 @@ import * as firebase from "firebase";
 
 
 
+
 var config = {
   apiKey: "AIzaSyAlSGvofVwY345VzVOhiPkqWicdAP3DLGg",
   authDomain: "filmconpra.firebaseapp.com",
@@ -38,15 +39,6 @@ class DashboardScreen extends Component {
   }
 }
 //-------------------------------------------------------------------------------------
-class Feed extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Feed</Text>
-      </View>
-    );
-  }
-}
 //-------------------------------------------------------------------------------------
 
 class Profile extends Component {
