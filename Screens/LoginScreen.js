@@ -1,9 +1,13 @@
 import React,{Component} from 'react';
 import { View, StyleSheet,Animated,Easing } from 'react-native';
 import * as firebase from "firebase";
-import { Button, Icon, FormLabel, FormInput, FormValidationMessage,Text } from 'react-native-elements'
-
+import { Button, Icon, Keyboard, TouchableWithoutFeedback, FormLabel, FormInput, FormValidationMessage,Text } from 'react-native-elements'
+import {KeyboardAvoidingView} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import DismissKeyboard from 'dismissKeyboard';
 class LoginScreen extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -56,24 +60,30 @@ class LoginScreen extends Component {
 
         const animatedStyle = {height: this.animatedValue}
         return (
-
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled> 
             <View style={styles.container}>
+            
+            
+           
                 <Animated.View style={[styles.filmcon, animatedStyle]}>
                     <Text h1
                     style={styles.filmcon}>
                     FILMCON
                     </Text>
                  </Animated.View>
-
+                 
                 <Icon style={{margin:'auto'}}
                     reverse
                     name='sc-telegram'
                     type='evilicon'
                     color='#7E7F7E'
                     size={30}
-                />
-                
+                />  
+              
                 <FormLabel>Email</FormLabel>
+                
+                
+                
                 <FormInput value={this.state.email} 
                     placeholder="Email"
                     placeholderTextColor="white"
@@ -83,8 +93,9 @@ class LoginScreen extends Component {
                     onSubmitEditing={() => { this.secondTextInput.focus(); }}
                     blurOnSubmit={false}
                 onChangeText={email => this.setState({ email })} />
+                  
                 
-                
+               
                 <FormLabel>Password</FormLabel>
                 
                 <FormInput value={this.state.password} 
@@ -93,6 +104,7 @@ class LoginScreen extends Component {
                     placeholderTextColor="white"
                     ref={(input) => { this.secondTextInput = input; }}
                 onChangeText={password => this.setState({ password })} />
+              
                 {this.renderButtonOrLoading()}
 
                 <Button 
@@ -101,14 +113,16 @@ class LoginScreen extends Component {
                 onPress={()=> this.props.navigation.navigate('SignupScreen')}
                 activityIndicatorStyle
                 title='¿No tienes cuenta? Regístrate'/>
-
-            </View>
-
+                
+           </View>
+</KeyboardAvoidingView>
         )
     }
+    
 }
 
 const styles = StyleSheet.create({
+    
     container: {
         flex: 1,
         backgroundColor: '#232323',
