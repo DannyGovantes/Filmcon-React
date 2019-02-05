@@ -1,7 +1,9 @@
 import React,{Component} from 'react';
-import { View,StyleSheet,Animated,Easing } from 'react-native';
+import { View,StyleSheet,Animated,Easing,
+KeyboardAvoidingView,TouchableWithoutFeedback,Alert } from 'react-native';
 import * as firebase from "firebase";
-import { Button, Icon, FormLabel, FormInput, FormValidationMessage,Text } from 'react-native-elements'
+import { Button, Icon, FormLabel, FormInput,Text } from 'react-native-elements'
+import DismissKeyboard from 'dismissKeyboard';
 
 
 var actionCodeSettings = {
@@ -56,7 +58,16 @@ class SignupScreen extends Component {
                 
             }).catch((err)=>{
                 //Display error
-                //err.message => string 
+                var error = err.message;
+                Alert.alert(
+                    'Error',
+                    error,
+                    [
+                        { text: 'OK', onPress: () => console.log('OK, pressed') },
+                    ],
+                    { cancelable: false }
+
+                ); 
             });
 
             this.setState({ loading: false });
@@ -64,7 +75,16 @@ class SignupScreen extends Component {
             this.props.navigation.navigate('Dashboard');
         }).catch((err) => {
             //Mostrar error de que no se pudo registrar
-            this.setState({ error: err.message, loading: false });
+            var error = err.message;
+            Alert.alert(
+                'Error',
+                error,
+                [
+                    { text: 'OK', onPress: () => console.log('OK, pressed') },
+                ],
+                { cancelable: false }
+
+            );
         })
     }
     renderButtonOrLoading() {
@@ -83,10 +103,17 @@ class SignupScreen extends Component {
     render() {
         const animatedStyle = { height: this.animatedValue }
         return (
+            <KeyboardAvoidingView
+            style={styles.container}
+            behavior="padding"
+            >
+            <TouchableWithoutFeedback onPress={()=>{DismissKeyboard()}}>
+
             <View style={styles.container}>
+
                 <Animated.View style={[styles.filmcon, animatedStyle]}>
                     <Text h1
-                        style={styles.filmcon}>
+                    style={styles.filmcon}>
                         FILMCON
                     </Text>
                 </Animated.View>
@@ -124,7 +151,9 @@ class SignupScreen extends Component {
                 onPress={() => this.props.navigation.navigate('LoginScreen')}
                     title='¿Ya tienes cuenta? Inicia sesión' />
             </View>
-        
+
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
         )
     }
 }

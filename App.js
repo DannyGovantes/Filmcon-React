@@ -28,17 +28,6 @@ class App extends Component {
 export default App;
 //--------------------------------------------------------------------------------------
 
-//DashBoard screen 
-class DashboardScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>DashboardScreen</Text>
-      </View>
-    );
-  }
-}
-//-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 
 class Profile extends Component {

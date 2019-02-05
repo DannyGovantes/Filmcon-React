@@ -1,13 +1,13 @@
 import React,{Component} from 'react';
-import { View, StyleSheet,Animated,Easing } from 'react-native';
+import { View, StyleSheet, Animated, Easing, KeyboardAvoidingView,TouchableWithoutFeedback,Alert } from 'react-native';
 import * as firebase from "firebase";
-import { Button, Icon, Keyboard, TouchableWithoutFeedback, FormLabel, FormInput, FormValidationMessage,Text } from 'react-native-elements'
-import {KeyboardAvoidingView} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { Button, Icon, FormLabel, FormInput,Text } from 'react-native-elements';
 import DismissKeyboard from 'dismissKeyboard';
+
+
 class LoginScreen extends Component {
     
+   
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +18,7 @@ class LoginScreen extends Component {
         };
 
     }
+
 
     componentWillMount(){
         this.animatedValue= new Animated.Value(0)
@@ -35,12 +36,21 @@ class LoginScreen extends Component {
         const { email, password } = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
             //Alert bienvenido usuario
-            this.setState({ error: '', loading: false });
+            
             this.props.navigation.navigate('Dashboard');
             
         }).catch((err) => {
-            //Alerta de error
-            this.setState({ error: 'Error with validation', loading: false });
+            var error= err.message;
+            Alert.alert(
+                'Error',
+                error,
+                [
+                    {text:'OK', onPress: ()=> console.log('OK, pressed')},
+                ],
+                {cancelable: false}
+                
+            );
+            
         })
     }
 
@@ -55,16 +65,22 @@ class LoginScreen extends Component {
             onPress={this.onLoginPress.bind(this)} title="Login" />
         </View>
 
-    }
+    } 
+    
     render() {
 
         const animatedStyle = {height: this.animatedValue}
         return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled> 
+
+            <KeyboardAvoidingView
+            style={styles.container}
+            behavior="padding">
+
+            
+            <TouchableWithoutFeedback onPress={()=>{DismissKeyboard()}}>       
+                
             <View style={styles.container}>
-            
-            
-           
+
                 <Animated.View style={[styles.filmcon, animatedStyle]}>
                     <Text h1
                     style={styles.filmcon}>
@@ -92,6 +108,7 @@ class LoginScreen extends Component {
                     returnKeyType={"next"}
                     onSubmitEditing={() => { this.secondTextInput.focus(); }}
                     blurOnSubmit={false}
+                 
                 onChangeText={email => this.setState({ email })} />
                   
                 
@@ -103,6 +120,7 @@ class LoginScreen extends Component {
                      placeholder="Password"
                     placeholderTextColor="white"
                     ref={(input) => { this.secondTextInput = input; }}
+                    
                 onChangeText={password => this.setState({ password })} />
               
                 {this.renderButtonOrLoading()}
@@ -115,9 +133,13 @@ class LoginScreen extends Component {
                 title='¿No tienes cuenta? Regístrate'/>
                 
            </View>
-</KeyboardAvoidingView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+
         )
+           
     }
+ 
     
 }
 
@@ -133,6 +155,12 @@ const styles = StyleSheet.create({
     filmcon: { 
         textAlign: 'center',
         color: 'white' 
+    },
+    oldState:{
+        flex:0,
+        padding: 10,
+        marginTop:20
+
     }
 
 
